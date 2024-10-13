@@ -156,12 +156,39 @@ void flipCards(int index) {
                    return Transform(
                      transform: Matrix4.rotationY(controlFlipAnimation[index].value * 3.14),
                     alignment: Alignment.center,
+                    child: isCardFlipped
+                        ? buildCardFront(index)
+                        : buildCardBack(index),
                    );
                  },
                ),
               );
             },
         ),
+      ),
+    );
+  }
+
+ Widget buildCardFront(int index) {
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(cardDeck[index].frontOfCard),
+          fit: BoxFit.fitHeight,
+        ),
+        borderRadius: BorderRadius.circular(8),
+      ),
+    );
+  }
+
+  Widget buildCardBack(int index) {
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(cardDeck[index].backOfCard),
+          fit: BoxFit.fitHeight,
+        ),
+        borderRadius: BorderRadius.circular(8),
       ),
     );
   }
