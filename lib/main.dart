@@ -44,6 +44,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+late List<AnimationController> controlFlipAnimation;
+List<CardModel> cardDeck = [];
+List<int> flippedCards = [];
+
+@override
+  void initState() {
+    super.initState();
+    inicializeAllcardDeck();
+    controlFlipAnimation = List.generate(cardDeck.length, (index) {
+      return AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 500),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
