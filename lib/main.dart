@@ -136,7 +136,32 @@ void flipCards(int index) {
         title: Text(widget.title),
       ),
       body: Center(
-
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4,
+            childAspectRatio: 1.5,
+            mainAxisSpacing: 20,
+            crossAxisSpacing: 5,
+          ),
+                    itemCount: cardDeck.length,
+                     itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                flipCards(index);
+              },
+               child: AnimatedBuilder(
+                animation: controlFlipAnimation[index],
+                 builder: (context, child) {
+                   final isCardFlipped = controlFlipAnimation[index].value >= 0.5;
+                   return Transform(
+                     transform: Matrix4.rotationY(controlFlipAnimation[index].value * 3.14),
+                    alignment: Alignment.center,
+                   );
+                 },
+               ),
+              );
+            },
+        ),
       ),
     );
   }
