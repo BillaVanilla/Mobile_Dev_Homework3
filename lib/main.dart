@@ -43,7 +43,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
 late List<AnimationController> controlFlipAnimation;
 List<CardModel> cardDeck = [];
 List<int> flippedCards = [];
@@ -58,6 +58,35 @@ List<int> flippedCards = [];
         duration: const Duration(milliseconds: 500),
       );
     });
+  }
+
+ @override
+  void dispose() {
+    for (var controller in controlFlipAnimation) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+ void inicializeAllcardDeck() {
+    List<String> frontOfCards = [
+      '10_of_diamonds.png',
+      '5_of_clubs.png',
+      '8_of_clubs.png',
+      'queen_of_diamonds.png',
+      '2_of_diamonds.png',
+      '2_of_clubs.png',
+      'jack_of_diamonds.png',
+      '10_of_hearts.png',
+    ];
+
+    cardDeck = List.generate(16, (index) {
+      return CardModel(
+        frontOfCard: frontOfCards[index % frontOfCards.length],
+        backOfCard: 'back.png',
+      );
+    });
+    cardDeck.shuffle();
   }
 
   @override
