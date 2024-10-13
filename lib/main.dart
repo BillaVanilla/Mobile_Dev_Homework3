@@ -89,6 +89,45 @@ List<int> flippedCards = [];
     cardDeck.shuffle();
   }
 
+void flipCards(int index) {
+    if (flippedCards.length < 2 && !cardDeck[index].isFaceUp && !cardDeck[index].areMatched) {
+      setState(() {
+        cardDeck[index].isFaceUp = true;
+        flippedCards.add(index);
+        controlFlipAnimation[index].forward(); // Animate card flip
+      });
+
+      if (flippedCards.length == 2) {
+        checkIfMatched();
+      }
+    }
+  }
+
+  void checkIfMatched() async {
+    await Future.delayed(const Duration(seconds: 1));
+
+    if (cardDeck[flippedCards[0]].frontOfCard == cardDeck[flippedCards[1]].frontOfCard) {
+      setState(() {
+        cardDeck[flippedCards[0]].areMatched = true;
+        cardDeck[flippedCards[1]].areMatched = true;
+      });
+    } else {
+      setState(() {
+        cardDeck[flippedCards[0]].isFaceUp = false;
+        cardDeck[flippedCards[1]].isFaceUp = false;
+
+        // Reverse the flip animation
+        controlFlipAnimation[flippedCards[0]].reverse();
+        controlFlipAnimation[flippedCards[1]].reverse();
+      });
+    }
+
+    setState(() {
+      flippedCards.clear();
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
