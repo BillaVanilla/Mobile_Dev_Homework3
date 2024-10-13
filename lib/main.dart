@@ -20,6 +20,21 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// Class exists to show card's state
+class CardModel {
+  final String frontOfCard;
+  final String backOfCard;
+  bool isFaceUp;
+  bool areMatched;
+
+  CardModel({
+    required this.frontOfCard,
+    required this.backOfCard,
+    this.isFaceUp = false,
+    this.areMatched = false,
+  });
+}
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
   final String title;
